@@ -2,11 +2,11 @@
 
 namespace WalkerChiu\MallShelf\Models\Entities;
 
-use WalkerChiu\Core\Models\Entities\Entity;
+use WalkerChiu\Core\Models\Entities\UuidEntity;
 use WalkerChiu\Core\Models\Entities\LangTrait;
 use WalkerChiu\MorphImage\Models\Entities\ImageTrait;
 
-class Catalog extends Entity
+class Catalog extends UuidEntity
 {
     use LangTrait;
     use ImageTrait;
@@ -77,7 +77,7 @@ class Catalog extends Entity
     /**
      * Get all of the comments for the catalog.
      *
-     * @param Int $user_id
+     * @param String $user_id
      * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function comments($user_id = null) {

@@ -16,7 +16,7 @@ class StockFormRequest extends FormRequest
         $request = Request::instance();
         $data = $this->all();
         if ($request->isMethod('put') && empty($data['id']) && isset($request->id)) {
-            $data['id'] = (int) $request->id;
+            $data['id'] = (string) $request->id;
             $this->getInputSource()->replace($data);
         }
 
@@ -72,9 +72,9 @@ class StockFormRequest extends FormRequest
     {
         $rules = [
             'host_type'         => 'required_with:host_id|string',
-            'host_id'           => 'required_with:host_type|integer|min:1',
-            'product_id'        => ['required','integer','min:1','exists:'.config('wk-core.table.mall-shelf.products').',id'],
-            'catalog_id'        => ['nullable','integer','min:1','exists:'.config('wk-core.table.mall-shelf.catalogs').',id'],
+            'host_id'           => 'required_with:host_type|string',
+            'product_id'        => ['required','string','exists:'.config('wk-core.table.mall-shelf.products').',id'],
+            'catalog_id'        => ['nullable','string','exists:'.config('wk-core.table.mall-shelf.catalogs').',id'],
             'type'              => '',
             'attribute_set'     => '',
             'sku'               => '',
@@ -116,7 +116,7 @@ class StockFormRequest extends FormRequest
         }
 
         if ($request->isMethod('put') && isset($request->id)) {
-            $rules = array_merge($rules, ['id' => ['required','integer','min:1','exists:'.config('wk-core.table.mall-shelf.stocks').',id']]);
+            $rules = array_merge($rules, ['id' => ['required','string','exists:'.config('wk-core.table.mall-shelf.stocks').',id']]);
         }
 
         return $rules;
@@ -131,20 +131,16 @@ class StockFormRequest extends FormRequest
     {
         return [
             'id.required'                => trans('php-core::validation.required'),
-            'id.integer'                 => trans('php-core::validation.integer'),
-            'id.min'                     => trans('php-core::validation.min'),
+            'id.string'                  => trans('php-core::validation.string'),
             'id.exists'                  => trans('php-core::validation.exists'),
             'host_type.required_with'    => trans('php-core::validation.required_with'),
             'host_type.string'           => trans('php-core::validation.string'),
             'host_id.required_with'      => trans('php-core::validation.required_with'),
-            'host_id.integer'            => trans('php-core::validation.integer'),
-            'host_id.min'                => trans('php-core::validation.min'),
+            'host_id.string'             => trans('php-core::validation.string'),
             'product_id.required'        => trans('php-core::validation.required'),
-            'product_id.integer'         => trans('php-core::validation.integer'),
-            'product_id.min'             => trans('php-core::validation.min'),
+            'product_id.string'          => trans('php-core::validation.string'),
             'product_id.exists'          => trans('php-core::validation.exists'),
-            'catalog_id.integer'         => trans('php-core::validation.integer'),
-            'catalog_id.min'             => trans('php-core::validation.min'),
+            'catalog_id.string'          => trans('php-core::validation.string'),
             'catalog_id.exists'          => trans('php-core::validation.exists'),
             'identifier.required'        => trans('php-core::validation.required'),
             'identifier.max'             => trans('php-core::validation.max'),

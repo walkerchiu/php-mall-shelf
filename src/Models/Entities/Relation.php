@@ -2,10 +2,10 @@
 
 namespace WalkerChiu\MallShelf\Models\Entities;
 
-use WalkerChiu\Core\Models\Entities\Entity;
+use WalkerChiu\Core\Models\Entities\UuidEntity;
 use WalkerChiu\Core\Models\Entities\LangTrait;
 
-class Relation extends Entity
+class Relation extends UuidEntity
 {
     use LangTrait;
 

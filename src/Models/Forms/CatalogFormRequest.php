@@ -15,7 +15,7 @@ class CatalogFormRequest extends FormRequest
         $request = Request::instance();
         $data = $this->all();
         if ($request->isMethod('put') && empty($data['id']) && isset($request->id)) {
-            $data['id'] = (int) $request->id;
+            $data['id'] = (string) $request->id;
             $this->getInputSource()->replace($data);
         }
 
@@ -55,7 +55,7 @@ class CatalogFormRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'product_id'  => ['required','integer','min:1','exists:'.config('wk-core.table.mall-shelf.products').',id'],
+            'product_id'  => ['required','string','exists:'.config('wk-core.table.mall-shelf.products').',id'],
             'serial'      => '',
             'color'       => 'nullable|string',
             'size'        => 'nullable|string',
@@ -79,7 +79,7 @@ class CatalogFormRequest extends FormRequest
 
         $request = Request::instance();
         if ($request->isMethod('put') && isset($request->id)) {
-            $rules = array_merge($rules, ['id' => ['required','integer','min:1','exists:'.config('wk-core.table.mall-shelf.catalogs').',id']]);
+            $rules = array_merge($rules, ['id' => ['required','string','exists:'.config('wk-core.table.mall-shelf.catalogs').',id']]);
         }
 
         return $rules;
@@ -94,12 +94,10 @@ class CatalogFormRequest extends FormRequest
     {
         return [
             'id.required'         => trans('php-core::validation.required'),
-            'id.integer'          => trans('php-core::validation.integer'),
-            'id.min'              => trans('php-core::validation.min'),
+            'id.string'           => trans('php-core::validation.string'),
             'id.exists'           => trans('php-core::validation.exists'),
             'product_id.required' => trans('php-core::validation.required'),
-            'product_id.integer'  => trans('php-core::validation.integer'),
-            'product_id.min'      => trans('php-core::validation.min'),
+            'product_id.string'   => trans('php-core::validation.string'),
             'product_id.exists'   => trans('php-core::validation.exists'),
             'color.string'        => trans('php-core::validation.string'),
             'size.string'         => trans('php-core::validation.string'),

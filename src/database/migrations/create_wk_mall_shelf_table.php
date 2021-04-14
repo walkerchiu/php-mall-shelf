@@ -9,8 +9,8 @@ class CreateWkMallShelfTable extends Migration
     public function up()
     {
         Schema::create(config('wk-core.table.mall-shelf.products'), function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->nullableMorphs('host');
+            $table->uuid('id');
+            $table->nullableUuidMorphs('host');
             $table->string('type')->nullable();
             $table->string('attribute_set')->nullable();
             $table->string('serial')->nullable();
@@ -25,6 +25,7 @@ class CreateWkMallShelfTable extends Migration
             $table->timestampsTz();
             $table->softDeletes();
 
+            $table->primary('id');
             $table->index('type');
             $table->index('attribute_set');
             $table->index('serial');
@@ -34,9 +35,9 @@ class CreateWkMallShelfTable extends Migration
         });
         if (!config('wk-mall-shelf.onoff.core-lang_core')) {
             Schema::create(config('wk-core.table.mall-shelf.products_lang'), function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->morphs('morph');
-                $table->unsignedBigInteger('user_id')->nullable();
+                $table->uuid('id');
+                $table->uuidMorphs('morph');
+                $table->uuid('user_id')->nullable();
                 $table->string('code');
                 $table->string('key');
                 $table->longText('value')->nullable();
@@ -49,12 +50,14 @@ class CreateWkMallShelfTable extends Migration
                     ->on(config('wk-core.table.user'))
                     ->onDelete('set null')
                     ->onUpdate('cascade');
+
+                $table->primary('id');
             });
         }
 
         Schema::create(config('wk-core.table.mall-shelf.catalogs'), function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('product_id');
+            $table->uuid('id');
+            $table->uuid('product_id');
             $table->string('serial')->nullable();
             $table->string('color')->nullable();
             $table->string('size')->nullable();
@@ -78,6 +81,7 @@ class CreateWkMallShelfTable extends Migration
                   ->onDelete('cascade')
                   ->onUpdate('cascade');
 
+            $table->primary('id');
             $table->index('serial');
             $table->index('color');
             $table->index('size');
@@ -87,9 +91,9 @@ class CreateWkMallShelfTable extends Migration
         });
         if (!config('wk-mall-shelf.onoff.core-lang_core')) {
             Schema::create(config('wk-core.table.mall-shelf.catalogs_lang'), function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->morphs('morph');
-                $table->unsignedBigInteger('user_id')->nullable();
+                $table->uuid('id');
+                $table->uuidMorphs('morph');
+                $table->uuid('user_id')->nullable();
                 $table->string('code');
                 $table->string('key');
                 $table->longText('value')->nullable();
@@ -102,18 +106,20 @@ class CreateWkMallShelfTable extends Migration
                     ->on(config('wk-core.table.user'))
                     ->onDelete('set null')
                     ->onUpdate('cascade');
+
+                $table->primary('id');
             });
         }
 
         Schema::create(config('wk-core.table.mall-shelf.stocks'), function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->nullableMorphs('host');
+            $table->uuid('id');
+            $table->nullableUuidMorphs('host');
             $table->string('type')->nullable();
             $table->string('attribute_set')->nullable();
             $table->string('sku')->nullable();
             $table->string('identifier');
-            $table->unsignedBigInteger('product_id')->nullable();
-            $table->unsignedBigInteger('catalog_id')->nullable();
+            $table->uuid('product_id')->nullable();
+            $table->uuid('catalog_id')->nullable();
             $table->unsignedDecimal('cost', config('wk-mall-shelf.unsigned_decimal.precision'), config('wk-mall-shelf.unsigned_decimal.scale'))->nullable();
             $table->unsignedDecimal('price_original', config('wk-mall-shelf.unsigned_decimal.precision'), config('wk-mall-shelf.unsigned_decimal.scale'))->nullable();
             $table->unsignedDecimal('price_discount', config('wk-mall-shelf.unsigned_decimal.precision'), config('wk-mall-shelf.unsigned_decimal.scale'))->nullable();
@@ -148,6 +154,7 @@ class CreateWkMallShelfTable extends Migration
                   ->onDelete('set null')
                   ->onUpdate('cascade');
 
+            $table->primary('id');
             $table->index('type');
             $table->index('attribute_set');
             $table->index('sku');
@@ -162,9 +169,9 @@ class CreateWkMallShelfTable extends Migration
         });
         if (!config('wk-mall-shelf.onoff.core-lang_core')) {
             Schema::create(config('wk-core.table.mall-shelf.stocks_lang'), function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->morphs('morph');
-                $table->unsignedBigInteger('user_id')->nullable();
+                $table->uuid('id');
+                $table->uuidMorphs('morph');
+                $table->uuid('user_id')->nullable();
                 $table->string('code');
                 $table->string('key');
                 $table->longText('value')->nullable();
@@ -177,12 +184,14 @@ class CreateWkMallShelfTable extends Migration
                     ->on(config('wk-core.table.user'))
                     ->onDelete('set null')
                     ->onUpdate('cascade');
+
+                $table->primary('id');
             });
         }
 
         Schema::create(config('wk-core.table.mall-shelf.relations'), function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->nullableMorphs('host');
+            $table->uuid('id');
+            $table->nullableUuidMorphs('host');
             $table->string('serial')->nullable();
             $table->json('relations');
             $table->boolean('is_enabled')->default(0);
@@ -190,14 +199,15 @@ class CreateWkMallShelfTable extends Migration
             $table->timestampsTz();
             $table->softDeletes();
 
+            $table->primary('id');
             $table->index('serial');
             $table->index('is_enabled');
         });
         if (!config('wk-mall-shelf.onoff.core-lang_core')) {
             Schema::create(config('wk-core.table.mall-shelf.relations_lang'), function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->morphs('morph');
-                $table->unsignedBigInteger('user_id')->nullable();
+                $table->uuid('id');
+                $table->uuidMorphs('morph');
+                $table->uuid('user_id')->nullable();
                 $table->string('code');
                 $table->string('key');
                 $table->longText('value')->nullable();
@@ -210,6 +220,8 @@ class CreateWkMallShelfTable extends Migration
                     ->on(config('wk-core.table.user'))
                     ->onDelete('set null')
                     ->onUpdate('cascade');
+
+                $table->primary('id');
             });
         }
     }

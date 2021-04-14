@@ -16,9 +16,9 @@ class StockSimpleFormRequest extends StockFormRequest
     {
         $rules = [
             'host_type'         => 'required_with:host_id|string',
-            'host_id'           => 'required_with:host_type|integer|min:1',
-            'product_id'        => ['nullable','integer','min:1','exists:'.config('wk-core.table.mall-shelf.products').',id'],
-            'catalog_id'        => ['nullable','integer','min:1','exists:'.config('wk-core.table.mall-shelf.catalogs').',id'],
+            'host_id'           => 'required_with:host_type|string',
+            'product_id'        => ['nullable','string','exists:'.config('wk-core.table.mall-shelf.products').',id'],
+            'catalog_id'        => ['nullable','string','exists:'.config('wk-core.table.mall-shelf.catalogs').',id'],
             'type'              => '',
             'sku'               => '',
             'identifier'        => 'required|string|max:255',
@@ -59,7 +59,7 @@ class StockSimpleFormRequest extends StockFormRequest
         }
 
         if ($request->isMethod('put') && isset($request->id)) {
-            $rules = array_merge($rules, ['id' => ['required','integer','min:1','exists:'.config('wk-core.table.mall-shelf.stocks').',id']]);
+            $rules = array_merge($rules, ['id' => ['required','string','exists:'.config('wk-core.table.mall-shelf.stocks').',id']]);
         }
 
         return $rules;

@@ -2,11 +2,11 @@
 
 namespace WalkerChiu\MallShelf\Models\Entities;
 
-use WalkerChiu\Core\Models\Entities\Entity;
+use WalkerChiu\Core\Models\Entities\UuidEntity;
 use WalkerChiu\Core\Models\Entities\LangTrait;
 use WalkerChiu\MorphImage\Models\Entities\ImageTrait;
 
-class Product extends Entity
+class Product extends UuidEntity
 {
     use LangTrait;
     use ImageTrait;

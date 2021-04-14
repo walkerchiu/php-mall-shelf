@@ -27,7 +27,7 @@ class StockRepository extends Repository
 
     /**
      * @param String  $host_type
-     * @param Int     $host_id
+     * @param String  $host_id
      * @param String  $code
      * @param Array   $data
      * @param Int     $page
@@ -270,7 +270,7 @@ class StockRepository extends Repository
 
     /**
      * @param String  $host_type
-     * @param Int     $host_id
+     * @param String  $host_id
      * @param String  $code
      * @param Any     $value
      * @param String  $target
@@ -307,7 +307,7 @@ class StockRepository extends Repository
 
     /**
      * @param String  $host_type
-     * @param Int     $host_id
+     * @param String  $host_id
      * @param String  $code
      * @param Any     $value
      * @param String  $target

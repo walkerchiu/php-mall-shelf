@@ -24,10 +24,10 @@ class StockService
     */
 
     /**
-     * @param Int $stock_id
+     * @param String $stock_id
      * @return Stock
      */
-    public function find(Int $stock_id)
+    public function find(String $stock_id)
     {
         $entity = $this->repository->find($stock_id);
 
@@ -38,12 +38,12 @@ class StockService
     }
 
     /**
-     * @param Stock|Int $source
+     * @param Stock|String $source
      * @return Stock
      */
     public function findBySource($source)
     {
-        if (is_integer($source))
+        if (is_string($source))
             $entity = $this->find($source);
         elseif (is_a($source, config('wk-core.class.mall-shelf.stock')))
             $entity = $source;
@@ -63,7 +63,7 @@ class StockService
 
     /**
      * @param String $sku
-     * @param Int    $id
+     * @param String $id
      * @return Boolean
      */
     public function checkExistSKU(String $sku, $id = null)

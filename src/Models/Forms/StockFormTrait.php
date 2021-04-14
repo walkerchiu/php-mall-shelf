@@ -12,8 +12,8 @@ trait StockFormTrait
 
     /**
      * @param String $host_type
-     * @param Int    $host_id
-     * @param Int    $id
+     * @param String $host_id
+     * @param String $id
      * @param Any    $value
      * @return Boolean
      */
@@ -26,8 +26,8 @@ trait StockFormTrait
 
     /**
      * @param String $host_type
-     * @param Int    $host_id
-     * @param Int    $id
+     * @param String $host_id
+     * @param String $id
      * @param Any    $value
      * @return Boolean
      */

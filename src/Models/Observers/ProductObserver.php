@@ -123,14 +123,10 @@ class ProductObserver
                 }
             }
             if ( config('wk-mall-shelf.onoff.morph-category') && !empty(config('wk-core.class.morph-category.category')) ) {
-                foreach ($entity->categories as $category) {
-                    $category->detach();
-                }
+                $entity->categories()->detach();
             }
             if ( config('wk-mall-shelf.onoff.morph-tag') && !empty(config('wk-core.class.morph-tag.tag')) && is_iterable($entity->tags) ) {
-                foreach ($entity->tags as $tag) {
-                    $tag->detach();
-                }
+                $entity->tags()->detach();
             }
             if ( config('wk-mall-shelf.onoff.morph-comment') && !empty(config('wk-core.class.morph-comment.comment')) ) {
                 $entity->comments->withTrashed()->forceDelete();

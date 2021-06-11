@@ -35,9 +35,10 @@ class StockRepository extends Repository
      * @param Boolean $is_enabled
      * @param String  $target
      * @param Boolean $target_is_enabled
-     * @return Array
+     * @param Boolean $toArray
+     * @return Array|Collection
      */
-    public function list($host_type, $host_id, String $code, Array $data, $page = null, $nums = null, $is_enabled = null, $target = null, $target_is_enabled = null)
+    public function list($host_type, $host_id, String $code, Array $data, $page = null, $nums = null, $is_enabled = null, $target = null, $target_is_enabled = null, $toArray = true)
     {
         $this->assertForPagination($page, $nums);
 
@@ -242,24 +243,28 @@ class StockRepository extends Repository
                             ->when(is_integer($page) && is_integer($nums), function ($query) use ($page, $nums) {
                                 return $query->forPage($page, $nums);
                             });
-        $list = [];
-        foreach ($records as $record) {
-            $this->setEntity($record);
+        if ($toArray) {
+            $list = [];
+            foreach ($records as $record) {
+                $this->setEntity($record);
 
-            $data = $record->toArray();
-            array_push($list,
-                array_merge($data, [
-                    'name'        => $record->findLangByKey('name'),
-                    'abstract'    => $record->findLangByKey('abstract'),
-                    'description' => $record->findLangByKey('description'),
-                    'keywords'    => $record->findLangByKey('keywords'),
-                    'catalog'     => $record->catalog,
-                    'covers'      => $this->getlistOfCovers($code)
-                ])
-            );
+                $data = $record->toArray();
+                array_push($list,
+                    array_merge($data, [
+                        'name'        => $record->findLangByKey('name'),
+                        'abstract'    => $record->findLangByKey('abstract'),
+                        'description' => $record->findLangByKey('description'),
+                        'keywords'    => $record->findLangByKey('keywords'),
+                        'catalog'     => $record->catalog,
+                        'covers'      => $this->getlistOfCovers($code)
+                    ])
+                );
+            }
+
+            return $list;
+        } else {
+            return $records;
         }
-
-        return $list;
     }
 
     /*
